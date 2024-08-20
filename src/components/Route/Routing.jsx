@@ -5,8 +5,7 @@ import { Box, Container } from "@mui/material";
 
 const Home = React.lazy(() => import("../pages/Home"));
 const NewDonor = React.lazy(() => import("../pages/NewDonor"));
-const About = () => <div>Search donor Page</div>;
-const Contact = () => <div>Login Page</div>;
+const SeachDonor = React.lazy(() => import("../pages/SearchDonor"));
 
 function Routing() {
   return (
@@ -19,10 +18,11 @@ function Routing() {
         <Container>
           <Suspense fallback={<div>Loading...</div>}>
             <Routes>
+              <Route path="/" color="inherit" element={<Home />} />
               <Route path="/home" color="inherit" element={<Home />} />
               <Route path="/new-donar" element={<NewDonor />} />
-              <Route path="/search-donor" element={<About />} />
-              <Route path="/login" element={<Contact />} />
+              <Route path="/search-donor" element={<SeachDonor />} />
+              {/* <Route path="/login" element={<Contact />} /> */}
             </Routes>
           </Suspense>
         </Container>

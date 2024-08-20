@@ -21,7 +21,7 @@ const Navbar = () => {
               src={logo}
               alt="Logo"
               style={{
-                height: '80px', // Adjust the size of the image as needed
+                height: '100px', // Adjust the size of the image as needed
                 marginRight: '8px', // Space between the image and text
               }}
             />

@@ -37,7 +37,7 @@ const NewDonor = () => {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          transition: "background-color 0.5s ease"
+          transition: "background-color 0.5s ease",
         }}
       >
         <CardContent>
@@ -54,8 +54,7 @@ const NewDonor = () => {
                   {...register("name")}
                   error={!!errors.name}
                   helperText={errors.name ? errors.name.message : ""}
-                  size="small"
-                  className="text-field"
+                  id="standard-basic"
                 />
               </Grid>
               <Grid item xs={12} md={6}>
@@ -66,8 +65,7 @@ const NewDonor = () => {
                   {...register("email")}
                   error={!!errors.email}
                   helperText={errors.email ? errors.email.message : ""}
-                  size="small"
-                  className="text-field"
+                  id="standard-basic"
                 />
               </Grid>
               <Grid item xs={12} md={6}>
@@ -78,8 +76,7 @@ const NewDonor = () => {
                   {...register("phone")}
                   error={!!errors.phone}
                   helperText={errors.phone ? errors.phone.message : ""}
-                  size="small"
-                  className="text-field"
+                  id="standard-basic"
                 />
               </Grid>
               <Grid item xs={12} md={6}>
@@ -91,8 +88,7 @@ const NewDonor = () => {
                   error={!!errors.district}
                   helperText={errors.district ? errors.district.message : ""}
                   select
-                  size="small"
-                  className="text-field"
+                  id="standard-basic"
                 ></TextField>
               </Grid>
               <Grid item xs={12} md={6}>
@@ -106,8 +102,7 @@ const NewDonor = () => {
                     errors.bloodGroup ? errors.bloodGroup.message : ""
                   }
                   select
-                  size="small"
-                  className="text-field"
+                  id="standard-basic"
                 ></TextField>
               </Grid>
               <Grid item xs={12} md={6}></Grid>
