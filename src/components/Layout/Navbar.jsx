@@ -1,9 +1,20 @@
-import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, Button, Box, IconButton, Drawer, List, ListItem, ListItemText } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import { Link } from 'react-router-dom';
-import logo from '../../assets/images/title.png';
-import { navItems } from '../constants';
+import React, { useState } from "react";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Box,
+  IconButton,
+  Drawer,
+  List,
+  ListItem,
+  ListItemText,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
+import { Link } from "react-router-dom";
+import logo from "../../assets/images/title.png";
+import { navItems } from "../constants";
 
 const Navbar = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -14,32 +25,39 @@ const Navbar = () => {
 
   return (
     <>
-      <AppBar position="fixed" sx={{ top: 0, left: 0, backgroundColor: '#d32f2f' }}>
+      <AppBar
+        position="fixed"
+        sx={{ top: 0, left: 0, backgroundColor: "#d32f2f" }}
+      >
         <Toolbar>
-          <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
+          <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}>
             <img
               src={logo}
               alt="Logo"
               style={{
-                height: '100px', // Adjust the size of the image as needed
-                marginRight: '8px', // Space between the image and text
+                height: "100px", // Adjust the size of the image as needed
+                marginRight: "8px", // Space between the image and text
               }}
             />
-            <Typography variant="h6" component="div" sx={{ color: '#ffffff', display: { xs: 'none', sm: 'block' } }}>
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ color: "#ffffff", display: { xs: "none", sm: "block" } }}
+            >
               Donate Today
             </Typography>
           </Box>
-          <Box sx={{ display: { xs: 'none', sm: 'flex' } }}>
+          <Box sx={{ display: { xs: "none", sm: "flex" } }}>
             {navItems.map((item) => (
               <Button
                 key={item.text}
                 color="inherit"
                 component={Link}
                 sx={{
-                  color: '#ffffff',
-                  boxShadow: 'none',
-                  '&:hover': { backgroundColor: '#c62828' },
-                  marginLeft: 1
+                  color: "#ffffff",
+                  boxShadow: "none",
+                  "&:hover": { backgroundColor: "#c62828" },
+                  marginLeft: 1,
                 }}
                 to={item.path}
               >
@@ -51,7 +69,12 @@ const Navbar = () => {
             edge="start"
             color="inherit"
             aria-label="menu"
-            sx={{ display: { xs: 'block', sm: 'none' } }}
+            sx={{
+              display: { xs: "block", sm: "none" },
+              "&:focus": {
+                outline: "none",
+              },
+            }}
             onClick={toggleDrawer(true)}
           >
             <MenuIcon />

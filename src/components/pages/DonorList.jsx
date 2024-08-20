@@ -13,11 +13,10 @@ import {
 const DonorList = ({ paginatedRows, count, rowsPerPage, page,handleChangePage,handleChangeRowsPerPage  }) => {
   return (
     <>
-      <TableContainer component={Paper} sx={{ maxHeight: '400px', overflowX: 'auto' }}>
+      <TableContainer component={Paper} sx={{ maxHeight: {md:'200px', sm:'180px', xs:'140px'}, overflowX: 'auto' }}>
         <Table sx={{ minWidth: 650 }} aria-label="donor table">
           <TableHead>
             <TableRow>
-              <TableCell>ID</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>District</TableCell>
               <TableCell>Blood Group</TableCell>
@@ -26,7 +25,6 @@ const DonorList = ({ paginatedRows, count, rowsPerPage, page,handleChangePage,ha
           <TableBody>
             {paginatedRows.map((row) => (
               <TableRow key={row.id}>
-                <TableCell>{row.id}</TableCell>
                 <TableCell>{row.name}</TableCell>
                 <TableCell>{row.district}</TableCell>
                 <TableCell>{row.bloodGroup}</TableCell>

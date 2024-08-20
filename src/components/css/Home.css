@@ -46,3 +46,24 @@ body {
         opacity: 1;
     }
 }
+
+/* Media Queries for smaller screens */
+@media (max-width: 768px) {
+    .home-image {
+        object-position: center center;
+        /* Adjust the position if necessary */
+    }
+}
+
+@media (max-width: 480px) {
+    .home-container {
+        /* Adjust container properties for very small screens */
+        padding: 10px;
+        /* Add padding if needed */
+    }
+
+    .home-image {
+        object-fit: contain;
+        /* Change to contain for better fitting */
+    }
+}
