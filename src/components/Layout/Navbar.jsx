@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { AppBar, Toolbar, Typography, Button, Box, IconButton, Drawer, List, ListItem, ListItemText } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from 'react-router-dom';
-import logo from '../assets/images/title.png';
-import { navItems } from './constants';
+import logo from '../../assets/images/title.png';
+import { navItems } from '../constants';
 
 const Navbar = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);

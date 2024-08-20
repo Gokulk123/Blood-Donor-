@@ -1,10 +1,10 @@
 import React, { Suspense } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Navbar from "./Navbar";
+import Navbar from "../Layout/Navbar";
 import { Box, Container } from "@mui/material";
 
-const Home = React.lazy(() => import("./Home"));
-const NewDonor = () => <div>New Donor Page</div>;
+const Home = React.lazy(() => import("../pages/Home"));
+const NewDonor = React.lazy(() => import("../pages/NewDonor"));
 const About = () => <div>Search donor Page</div>;
 const Contact = () => <div>Login Page</div>;
 
