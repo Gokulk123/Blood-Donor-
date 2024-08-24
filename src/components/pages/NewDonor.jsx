@@ -13,22 +13,63 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { NewDonorschema } from "../Validation/NewDonor";
 import { getCommonMasterData } from "../../api/api";
-// import '../css/NewDonor.css';
+import '../css/NewDonor.css';
 
 const NewDonor = () => {
   const [districtDropdownData, setDistrictDropdownData] = useState([]);
   const [bloodGroupDropdownData, setBloodGroupDropdownData] = useState([]);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
   const {
     register,
-    handleSubmit,
     formState: { errors },
+    handleSubmit,
+    reset
   } = useForm({
     resolver: yupResolver(NewDonorschema),
   });
 
-  const onSubmit = (data) => {
-    console.log(data);
+   const [donorData, setDonorData] = useState({
+    name: "",
+    email: "",
+    mobile: "",
+    bloodGroupId: "",
+    districtId: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setDonorData((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
+
+ const onSubmit = async () => {
+  try {
+    const response = await fetch("http://127.0.0.1:8000/user/new-donor", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(donorData),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      setMessage(data.message || "New donor created successfully.");
+      setError("");
+      reset();
+    } else {
+      const errorData = await response.json();
+      setMessage("");
+      setError(errorData.error || "Failed to create donor.");
+    }
+  } catch (error) {
+    setMessage("");
+    setError("An error occurred while creating the donor.");
+  }
+};
 
   useEffect(() => {
     getCommonMasterData('http://127.0.0.1:8000/master/districts')
@@ -78,9 +119,11 @@ const NewDonor = () => {
                   label="Name"
                   variant="standard"
                   {...register("name")}
-                  error={!!errors.name}
-                  helperText={errors.name ? errors.name.message : ""}
+                  error={!!errors.name && !donorData.name}
+                  helperText={!donorData.name && errors.name ? errors.name.message : ""}
                   id="standard-basic"
+                  onChange={handleChange}
+                  value={donorData.name || ""}
                 />
               </Grid>
               <Grid item xs={12} md={6}>
@@ -89,9 +132,11 @@ const NewDonor = () => {
                   label="Email"
                   variant="standard"
                   {...register("email")}
-                  error={!!errors.email}
-                  helperText={errors.email ? errors.email.message : ""}
+                  error={!!errors.email && !donorData.email}
+                  helperText={!donorData.email && errors.email ? errors.email.message : ""}
                   id="standard-basic"
+                  onChange={handleChange}
+                  value={donorData.email || ""}
                 />
               </Grid>
               <Grid item xs={12} md={6}>
@@ -99,10 +144,12 @@ const NewDonor = () => {
                   fullWidth
                   label="Phone Number"
                   variant="standard"
-                  {...register("phone")}
-                  error={!!errors.phone}
-                  helperText={errors.phone ? errors.phone.message : ""}
+                  {...register("mobile")}
+                  error={!!errors.mobile && !donorData.mobile}
+                  helperText={!donorData.mobile && errors.mobile ? errors.mobile.message : ""}
                   id="standard-basic"
+                  onChange={handleChange}
+                  value={donorData.mobile || ""}
                 />
               </Grid>
               <Grid item xs={12} md={6}>
@@ -110,11 +157,13 @@ const NewDonor = () => {
                   fullWidth
                   label="District"
                   variant="standard"
-                  {...register("district")}
-                  error={!!errors.district}
-                  helperText={errors.district ? errors.district.message : ""}
+                  {...register("districtId")}
+                  error={!!errors.districtId && !donorData.districtId}
+                  helperText={!donorData.districtId && errors.districtId ? errors.districtId.message : ""}
                   select
                   id="standard-basic"
+                  onChange={handleChange}
+                  value={donorData.districtId || ""}
                 >
                   {districtDropdownData?.map((district) => (
                     <MenuItem key={district.id} value={district.id}>
@@ -128,13 +177,15 @@ const NewDonor = () => {
                   fullWidth
                   label="Blood Group"
                   variant="standard"
-                  {...register("bloodGroup")}
-                  error={!!errors.bloodGroup}
+                  {...register("bloodGroupId")}
+                  error={!!errors.bloodGroupId && !donorData.bloodGroupId}
                   helperText={
-                    errors.bloodGroup ? errors.bloodGroup.message : ""
+                    !donorData.bloodGroupId && errors.bloodGroupId ? errors.bloodGroupId.message : ""
                   }
                   select
                   id="standard-basic"
+                  onChange={handleChange}
+                  value={donorData.bloodGroupId || ""}
                 >
                   {bloodGroupDropdownData?.map((bloodGroup) => (
                     <MenuItem key={bloodGroup.id} value={bloodGroup.id}>
@@ -151,6 +202,8 @@ const NewDonor = () => {
               </Button>
             </CardActions>
           </form>
+          {message && <p className="success-message">{message}</p>}
+      {error && <p className="error-message">{error}</p>}
         </CardContent>
       </Card>
     </div>
