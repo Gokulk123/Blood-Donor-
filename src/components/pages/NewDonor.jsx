@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -7,13 +7,17 @@ import {
   CardActions,
   Button,
   Grid,
+  MenuItem,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { NewDonorschema } from "../Validation/NewDonor";
+import { getCommonMasterData } from "../../api/api";
 // import '../css/NewDonor.css';
 
 const NewDonor = () => {
+  const [districtDropdownData, setDistrictDropdownData] = useState([]);
+  const [bloodGroupDropdownData, setBloodGroupDropdownData] = useState([]);
   const {
     register,
     handleSubmit,
@@ -25,6 +29,28 @@ const NewDonor = () => {
   const onSubmit = (data) => {
     console.log(data);
   };
+
+  useEffect(() => {
+    getCommonMasterData('http://127.0.0.1:8000/master/districts')
+      .then((data) => {
+        if (data) {
+          setDistrictDropdownData(data); // Update the state with the fetched data
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to fetch districts:", error);
+      });
+
+      getCommonMasterData('http://127.0.0.1:8000/master/blood_groups')
+      .then((data) => {
+        if (data) {
+          setBloodGroupDropdownData(data); // Update the state with the fetched data
+        }
+      })
+      .catch((error) => {
+        console.error("Failed to fetch districts:", error);
+      });
+  }, []);
 
   return (
     <div>
@@ -89,7 +115,13 @@ const NewDonor = () => {
                   helperText={errors.district ? errors.district.message : ""}
                   select
                   id="standard-basic"
-                ></TextField>
+                >
+                  {districtDropdownData?.map((district) => (
+                    <MenuItem key={district.id} value={district.id}>
+                      {district.name}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </Grid>
               <Grid item xs={12} md={6}>
                 <TextField
@@ -103,7 +135,13 @@ const NewDonor = () => {
                   }
                   select
                   id="standard-basic"
-                ></TextField>
+                >
+                  {bloodGroupDropdownData?.map((bloodGroup) => (
+                    <MenuItem key={bloodGroup.id} value={bloodGroup.id}>
+                      {bloodGroup.name}
+                    </MenuItem>
+                  ))}
+                </TextField>
               </Grid>
               <Grid item xs={12} md={6}></Grid>
             </Grid>
