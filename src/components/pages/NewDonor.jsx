@@ -14,6 +14,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { NewDonorschema } from "../Validation/NewDonor";
 import { getCommonMasterData } from "../../api/api";
 import '../css/NewDonor.css';
+import { BLOOD_GROUPS, CREATE_DONOR, DISTRICTS } from "../../common/url/url";
 
 const NewDonor = () => {
   const [districtDropdownData, setDistrictDropdownData] = useState([]);
@@ -47,7 +48,7 @@ const NewDonor = () => {
 
  const onSubmit = async () => {
   try {
-    const response = await fetch("http://127.0.0.1:8000/user/new-donor", {
+    const response = await fetch(CREATE_DONOR, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -72,7 +73,7 @@ const NewDonor = () => {
 };
 
   useEffect(() => {
-    getCommonMasterData('http://127.0.0.1:8000/master/districts')
+    getCommonMasterData(DISTRICTS)
       .then((data) => {
         if (data) {
           setDistrictDropdownData(data); // Update the state with the fetched data
@@ -82,7 +83,7 @@ const NewDonor = () => {
         console.error("Failed to fetch districts:", error);
       });
 
-      getCommonMasterData('http://127.0.0.1:8000/master/blood_groups')
+      getCommonMasterData(BLOOD_GROUPS)
       .then((data) => {
         if (data) {
           setBloodGroupDropdownData(data); // Update the state with the fetched data
